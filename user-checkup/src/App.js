@@ -1,5 +1,7 @@
-import React from 'react';
-import React, { UserContext} from 'react'
+
+import React from 'react' ;
+import { BrowserRouter, Route } from 'react-router-dom'
+import { UserContext } from './components/userContext'
 import './App.css';
 import Login from "./components/Login"
 import UserList from "./components/UserList"
@@ -8,21 +10,27 @@ import PageNotFound from "./components/PageNotFound"
 
 class App extends React.Component {
   state = {
-    user : ""
+    user: ""
   }
-  setUser(){
+  setUser() {
 
   }
+
+  
+
   render() {
-    return <UserContext.Provider value={}>
+    return <UserContext.Provider value={""}>
 
-    <BrowserRouter>
-    <Route exact path="/" component={Login} onClick={this.setUser} />
-    <Route exact path="/UserList" component={UserList} />
-    <Route exact path="/UserProfile" component={UserProfile} />
-    <Route exact path="/PageNotFound" component={PageNotFound} />
-    </BrowserRouter>
-    
+      <BrowserRouter>
+        <div>
+          <Switch>
+            <Route exact path="/" component={props => <Login {...props.setUser()} />} />
+            <Route path="/UserList" component={UserList} />
+            <Route path="/UserProfile" component={UserProfile} />
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     </UserContext.Provider>
   }
 }
