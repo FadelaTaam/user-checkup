@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
-import Button from 'bootstrap';
-
+import React, { Component } from 'react'
 
 class Login extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            userName: "",
-            password: "",
-            userList: []
+            userName: '',
+            passWord: '',
+            userList: [],
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -18,47 +16,44 @@ class Login extends Component {
             const result_JSON = await result.json();
             this.setState({ userList: result_JSON })
             console.log(this.state.userList);
-
+        } catch (error) {
+            console.log(error);
         }
-        catch (error) {
-            console.error(error)
-        }
-        onUserNameChange = (e) => {
-            this.setState({ userName: e.target.value })
-        }
-        onPassWordChange = (e) => {
-            this.setState({ passWord: e.target.value })
-        }
-        handleClick = () => {
-            const { userList } = this.state
-            for (let i = 0; i < userList.lenght; i++) {
-                const element = userList[i]
-                console.log(element.username, this.state.userName)
-                console.log(element.address.city, this.state.passWord)
-                if (element.username === this.state.userName && element.address.city === this.state.password) {
-                    this.props.setUser({ username: this.state.userName })
-                    this.props.history.push('/userlist')
-                    console.log("Good")
-                    return
-                }
-            };
+    }
+    onUserNameChange = (e) => {
+        this.setState({ userName: e.target.value })
+    }
+    onPassWordChange = (e) => {
+        this.setState({ passWord: e.target.value })
+    }
+    handleClick = () => {
+        const { userList } = this.state
+        for (let i = 0; i < userList.length; i++) {
+            const element = userList[i]
+            console.log(element.username, this.state.userName)
+            console.log(element.address.city, this.state.passWord)
+            if (element.username === this.state.userName && element.address.city === this.state.passWord) {
+                this.props.setUser({ username: this.state.userName })
+                this.props.history.push("/userList")
+                return;
+            }
         };
-        console.log("Username ou Password incorrect")
-    };
+        console.log('Username ou Password incorrect')
+    }
     render() {
-        return <div className="container">
-            <h2>Login</h2>
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping">@</span>
-                <input onChange={this.OnUserNameChange} value={this.state.userName} type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
-                </input>
+        return (<div className="container">
+            <div className="row">
+                <div className="input-group flex-nowrap">
+                    <span className="input-group-text" id="addon-wrapping">@</span>
+                    <input onChange={this.onUserNameChange} value={this.state.userName} type="text" className="form-control border-dark " placeholder="UserName" aria-label="Username" />
+                </div>
+                <div className="col">
+                    <input onChange={this.onPassWordChange} value={this.state.passWord} type="text" className="form-control border-dark" placeholder="PassWord" aria-label="Password" />
+                </div>
+                <button onClick={this.handleClick} type="button" type='submit'>Valider</button>
             </div>
-            <input onChange={this.OnPasswordChange} value={this.state.passWord} type="text" class="form-control" placeholder="Password" aria-label="Password">
-            </input>
-
-            <Button onClick={this.handleClick} type="button" class="btn btn-dark btn-lg" type='submit'>Valider</Button>
         </div>
-    };
-};
-
+        )
+    }
+}
 export default Login
